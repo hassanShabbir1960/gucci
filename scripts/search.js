@@ -1,6 +1,6 @@
 // Define basePath to elasticsearch and index
 var basePath = 'https://elodocuments.es.us-central1.gcp.cloud.es.io:9243';
-var index = 'litigantf'
+var index = 'liti1'
 
 
 var myHeaders = new Headers();
@@ -177,7 +177,6 @@ async function search() {
   console.log("KKKKKKKKKKKKKK")
   // Only run a query if the string contains at least three characters
   if (query.length > 2) {
-    console.log("KKKKKKKKKKKdsdsdKKK")
     // Make the HTTP request with the query as a parameter and wait for the JSON results
     let response = await getResponse(query)
     // Get the part of the JSON response that we care about
@@ -193,22 +192,21 @@ async function search() {
       var array = gatherAllwords(temp,query);
 
       var i= 1
-      console.log(results);
       for (var item in results) {
 
         let uh_text = results[item]._source.Text
-        console.log(uh_text);
         text = highlihting(array,uh_text)
         let path = results[item]._source.Filename
         resultdiv.append(" <Strong> <u><p> Match " + i + " : </p</u> </Strong>") 
         resultdiv.append('<p style="color: #000000">  <u>File path : </u>&emsp;</br>' + path+ '</p> ');
-        // resultdiv.append('<p style="color: #000000">  <u>Date & time :</u> &emsp;</br>' + results[item]._source['Date and Time']+ '</p> ');
-        
-        // resultdiv.append('<p style="color: #000000">  <u>Card Number :</u>&emsp;' + results[item]._source['Card Number']+ '</p> ');
-        // resultdiv.append('<p style="color: #000000">  <u>Topic Label :</u>&emsp;' + results[item]._source['Topic Label']+ '</p> ');
+        resultdiv.append('<p style="color: #000000">  <u>Created time :</u> &emsp;' + results[item]._source['Created time']+ '</p> ');
+        resultdiv.append('<p style="color: #000000">  <u>Modified time :</u>&emsp;' + results[item]._source['Modified time']+ '</p> ');
+        resultdiv.append('<p style="color: #000000">  <u>File Type :</u>&emsp;' + results[item]._source['File Type']+ '</p> ');
         
         resultdiv.append(" <Strong> <u><p> Text " + " : </p</u> </Strong>");
         resultdiv.append('<div class="result">' + text+ '</p></div></div>');
+        resultdiv.append(' </div></div></div></div>')
+        
         resultdiv.append('===============================================');
         i+=1
 
